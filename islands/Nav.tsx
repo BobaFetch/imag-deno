@@ -34,7 +34,7 @@ export default function Navigation() {
   )
 }
 
-const title = 'IMAGINETICS'
+const title = 'DEV SERVER'
 
 const departmentData = [
   {
