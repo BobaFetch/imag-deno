@@ -49,6 +49,13 @@ export default function Table({parts, dept}) {
       setJobs(jobList)
     }, 300000)
   })
+  if (!jobs) {
+    return (
+      <div>
+        <h1>No Jobs In Queue</h1>
+      </div>
+    )
+  }
   return (
     <div>
       <table class={tw`border border-black`}>

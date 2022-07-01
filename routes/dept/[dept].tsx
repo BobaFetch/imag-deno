@@ -38,31 +38,23 @@ export const handler:Handlers<JobList | null> = {
       const deptName = "CNC"
       return ctx.render({jobs, dept, deptName})
     }
-
+    
     const response = await fetch(`${api}/testing/dept/${dept}`);
     if (response.status === 404) {
       return ctx.render(null);
     }
     const departmentName = getDepartmentName(dept)
     const jobs:JobList[] = await response.json()
-    const deptName =  jobs[0].WC_Name
+    
+    if (!jobs) {
+      const deptName = ""
+      const jobs = []
+      return ctx.render({jobs, dept, deptName})
+    }
+    const deptName =  "" || jobs[0].WC_Name
     return ctx.render({jobs, dept, deptName})
   }
 }
-
-// export const handler:Handlers<JobList> = {
-//   async GET(_, ctx) {
-//     const { dept } = ctx.params
-//     let jobs:JobList[]
-
-//     const res = await fetch(`${api}/testing/${dept}`)
-//     jobs = await res.json()
-
-//     const deptName = "department"
-
-//     return ctx.render({jobs, dept, deptName})
-//   }
-// }
 
 function getDepartmentName(dept) {
   const department = null //todo
@@ -72,7 +64,7 @@ function getDepartmentName(dept) {
 export default function Dept({data}:PageProps<JobList | null>) {
   const { jobs, dept, deptName } = data
   // console.log(data)
-  if (!jobs) {
+  if (jobs.length <= 0) {
     return (
       <div>
         <Navigation />
